@@ -1,0 +1,88 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+  <div class="col-md-5 p-lg-5 mx-auto my-5">
+    <h3 > Sg-moomin Flask Study Project </h3>
+    <p class="lead font-weight-normal"> Question and Answer </p>
+    <a class="btn btn-outline-secondary" href="#">Coming soon</a>
+  </div>
+  <div class="product-device shadow-sm d-none d-md-block"></div>
+  <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+</div>
+<div class="container my-3">
+    <table class="table">
+        <thead>
+        <tr class="thead-dark">
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if question_list %}
+        {% for question in question_list.items %}
+        <tr>
+            <!-- 순서 index -->
+            <td>{{ question_list.total - ((question_list.page-1) * question_list.per_page) - loop.index0 }}</td>
+            <td>
+                <a href="{{ url_for('question.detail', question_id=question.id) }}">{{ question.subject }}</a>
+                {% if question.answer_set|length > 0%}
+                <span class="text-danger small ml-2">[{{question.answer_set|length}}]</span>
+                {% endif %}
+
+            </td>
+            <td>{{ question.create_date|datetime }}</td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+            <td colspan="3">질문이 없습니다.</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+
+ <!-- paging -->
+    <ul class="pagination justify-content-center">
+        <!-- 이전페이지 -->
+        {% if question_list.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.prev_num }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        {% for page_num in question_list.iter_pages() %}
+            {% if page_num %}
+                {% if page_num != question_list.page %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a>
+                </li>
+                {% else %}
+                <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">{{ page_num }}</a>
+                </li>
+                {% endif %}
+           {% else %}
+                <li class="disabled">
+                    <a class="page-link" href="#">...</a>
+                </li>
+           {% endif %}
+        {% endfor %}
+        <!-- 다음페이지 -->
+        {% if question_list.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ question_list.next_num }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <a href="{{ url_for('question.create') }}" class="btn btn-primary"> 등록하기 </a>
+</div>
+    {% endblock %}
