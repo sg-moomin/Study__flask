@@ -7,17 +7,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='staticMain.css') }}">
+    <link rel="stylesheet" type="text/css" href="{% static 'staticMain.css' %}">
     <!-- pybo CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}">
     <title>Hello, pybo!</title>
     <!-- script -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 
     <!-- jQuery JS -->
-    <script src="{{ url_for('static', filename='jquery-3.6.0.min.js') }}"></script>
+    <script src="{% static 'jquery-3.6.0.min.js' %}"></script>
     <!-- Bootstrap JS -->
-    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    <script src="{% static 'bootstrap.min.js' %}"></script>
     <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
      <!-- Bootstrap core CSS -->
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -37,7 +37,7 @@
         }
       }
     </style>
-{% include "navbar.html" %}
+{% include "winRate/navbar.html" %}
 </head>
 <body>
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->

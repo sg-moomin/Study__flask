@@ -27,13 +27,18 @@
             </div>
         </div>
         {% endfor %}
-        <form action="{% url 'pybo:answer_create' question.id %}" method="post">
+        <form action="{% url 'winRate:answer_create' question.id %}" method="post">
             {% csrf_token %}
-            {% for field, errors in form.errors.items()%}
+            {% if form.errors %}
             <div class="alert alert-danger" role="alert">
-                <strong>{{ form[field].label }}</strong>: {{ ', '.join(errors) }}
-            </div>
+            {% for field in form %}
+                {% if field.errors %}
+                <strong>{{ field.label }}</strong>
+                {{ field.errors }}
+                {% endif %}
             {% endfor %}
+            </div>
+            {% endif %}
             <div class="form-group">
                 <textarea {% if not g.user %}disabled{% endif %} name="content" id="content" class="form-control" rows="10"></textarea>
             </div>
