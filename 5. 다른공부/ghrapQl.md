@@ -1,4 +1,4 @@
-###### 그래프 QL
+###### 그래프 QL Study
 
 ---
 
@@ -97,3 +97,90 @@
       - ##### 서버 자체에서 스키마로 실시간으로 정보를 공유할 수 있도록 함
       - ##### 이는 스키마 정보만 알면 연동 규격서가 필요 없어짐
       - ##### 인트로스펙션 쿼리가 따로 존재하지만 GQL 라이브러리에 쿼리용 IDE를 제공함
+
+###### 별칭(Aliases)
+  - 별칭을 사용하는 경우가 있는데 별칭을 사용하는 경우 필드의 결과의 이름을 원하는 이름으로 바꿀 수 있다.
+  ![Gitlab](https://cdn.discordapp.com/attachments/911905192407101463/921043324259934298/unknown.png)
+  - hero 필드는 충돌이 났지만 별칭(empireHero, jediHero)을 지정할 수 있다.
+
+
+###### Fragments
+  - GQL을 호출해올 경우 쿼리의 속도는 천차 만별인데 이 때 필드를 한번 이상 반복해야 하는 경우가 생긴다.
+  - 이 때 Fragments를 이용하여 재사용 가능한 단위를 묶으주면 된다.
+  ~~~~
+    {
+      "data": {
+        "leftHome": {
+          "name": "퇴사",
+          "appearsIn": [
+            "집",
+            "야근",
+            "sgMoomin"
+          ],
+          "friends": [
+            {
+              "name": "가나 초콜릿"
+            },
+            {
+              "name": "초콜릿 존맛탱"
+            },
+            {
+              "name": "쉬림프 파스타"
+            },
+            {
+              "name": "떡볶이 존맛탱구"
+            }
+          ]
+        },
+        "rightHome": {
+          "name": "취직",
+          "appearsIn": [
+            "회사",
+            "정시출근",
+            "rominPic"
+          ],
+          "friends": [
+            {
+              "name": "코딩업무"
+            },
+            {
+              "name": "데이터 보정"
+            },
+            {
+              "name": "할렐루야"
+            }
+          ]
+        }
+      }
+    }
+
+  ~~~~
+
+  - 위의 필드를 보면 내용이 반복되는 것을 볼 수 있는데 아래와 같이 함축할 수 있다.
+
+  ~~~
+  {
+    leftHome: hero(episode: sgMoomin) {
+      ...comparisonFields
+    }
+    rightHome: hero(episode: rominPic) {
+      ...comparisonFields
+    }
+  }
+
+  fragment comparisonFields on Character {
+    name
+    appearsIn
+    friends {
+      name
+    }
+  ~~~
+
+  - 즉 프래그먼트의 개념은 복잡한 애플리케이션 데이터 요구사항을 더 작게 분할하기 위해 자주 사용합니다.
+
+-------------
+
+###### 참고자료
+
+  - https://graphql.org/
+  - https://tech.kakao.com/2019/08/01/graphql-basic/
