@@ -12,3 +12,5 @@ def home(request):
 def logins(request):
     return render(request, 'login.html')
 
+def rates(request):
+    return render(request, 'rates.html')
